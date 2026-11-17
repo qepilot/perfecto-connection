@@ -15,13 +15,13 @@ test.describe('Perfecto connection', () => {
   });
 
   test('can open a page and read it', async ({ page }) => {
-    await page.goto('https://example.com');
-    await expect(page).toHaveTitle(/Example Domain/);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Example Domain');
+    await page.goto('https://playwright.dev');
+    await expect(page).toHaveTitle(/Playwright/);
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Playwright');
   });
 
   test('reports the remote user agent', async ({ page }) => {
-    await page.goto('https://example.com');
+    await page.goto('https://playwright.dev');
     const userAgent = await page.evaluate(() => navigator.userAgent);
     console.log(`Remote user agent: ${userAgent}`);
     expect(userAgent).toBeTruthy();
