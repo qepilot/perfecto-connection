@@ -1,0 +1,17 @@
+{
+  "name": "perfecto-connection",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright tests that verify a connection to the Perfecto cloud",
+  "scripts": {
+    "test": "playwright test",
+    "test:connection": "playwright test tests/connection.spec.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^22.20.5",
+    "dotenv": "^18.0.10",
+    "typescript": "^7.0.2"
+  }
+}
