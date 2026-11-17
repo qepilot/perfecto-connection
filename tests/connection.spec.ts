@@ -6,7 +6,9 @@ test.describe('Perfecto connection', () => {
     const caps = perfectoCapabilities();
     test.info().annotations.push({
       type: 'perfecto',
-      description: `${caps.browserName} ${caps.browserVersion} on ${caps.platformName} ${caps.platformVersion}`,
+      description:
+        `${caps.browserName} ${caps.browserVersion} on ${caps.platformName} ${caps.platformVersion}` +
+        (caps.tunnelId ? ` via tunnel ${caps.tunnelId}` : ''),
     });
 
     // If we got this far, the WebSocket handshake with Perfecto succeeded.
