@@ -49,7 +49,7 @@ npm run test:connection
 `tests/connection.spec.ts` checks three things:
 
 1. The WebSocket session to Perfecto opens and the remote browser reports its version.
-2. A page loads (`https://example.com`) and its title and heading can be read.
+2. A page loads (`https://playwright.dev`) and its title and main heading can be read.
 3. The remote browser's user agent can be read.
 
 You can see the runs in Perfecto's report under the job name you set. The local
