@@ -13,6 +13,8 @@ export interface PerfectoCapabilities {
   securityToken: string;
   'report.jobName'?: string;
   'report.jobNumber'?: number;
+  /** Perfecto Connect tunnel, for sites only reachable from your network. */
+  tunnelId?: string;
   [key: string]: unknown;
 }
 
@@ -28,7 +30,10 @@ function required(name: string): string {
 
 export function perfectoCapabilities(): PerfectoCapabilities {
   const env = process.env;
+  const tunnelId = env.PERFECTO_TUNNEL_ID?.trim();
   return {
+    // Only sent when set, so tests against public sites are unaffected.
+    ...(tunnelId ? { tunnelId } : {}),
     platformName: env.PERFECTO_PLATFORM_NAME || 'Windows',
     platformVersion: env.PERFECTO_PLATFORM_VERSION || '11',
     browserName: env.PERFECTO_BROWSER_NAME || 'Chrome',

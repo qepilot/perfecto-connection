@@ -34,7 +34,7 @@ Edit `.env` and set at least:
 
 These are optional: `PERFECTO_PLATFORM_NAME`, `PERFECTO_PLATFORM_VERSION`,
 `PERFECTO_BROWSER_NAME`, `PERFECTO_BROWSER_VERSION`, `PERFECTO_JOB_NAME` and
-`PERFECTO_JOB_NUMBER`. Defaults are Chrome `latest` on Windows 11.
+`PERFECTO_JOB_NUMBER`, and `PERFECTO_TUNNEL_ID` (see below). Defaults are Chrome `latest` on Windows 11.
 
 `.env` is gitignored. Never commit your token.
 
@@ -54,6 +54,36 @@ npm run test:connection
 
 You can see the runs in Perfecto's report under the job name you set. The local
 HTML report is in `playwright-report/`.
+
+## Testing internal sites (Perfecto Connect tunnel)
+
+Public sites such as `playwright.dev` need nothing extra. If the site under test
+is only reachable from your network (internal, staging behind a VPN or firewall,
+or `localhost`), Perfecto's cloud browser can't load it. In that case, open a
+Perfecto Connect tunnel and pass its ID:
+
+1. Download the Perfecto Connect client for your OS from Perfecto (see
+   [Work with Perfecto Connect](https://help.perfecto.io/perfecto-help/content/perfecto/automation-testing/work_with_perfecto_connect.htm)).
+2. On a machine that can reach the site, start a tunnel:
+
+   ```bash
+   ./perfectoconnect start -c mlb.perfectomobile.com -s <security token>
+   ```
+
+   The command prints the tunnel ID. Keep the client running while the tests run.
+3. Put that ID in `.env` as `PERFECTO_TUNNEL_ID=...`. It is sent as the
+   `tunnelId` capability only when set.
+4. Run the tests as usual. When you're done, stop the tunnel with
+   `./perfectoconnect stop`.
+
+To capture the ID in one step (for example in CI):
+
+```bash
+export PERFECTO_TUNNEL_ID=$(./perfectoconnect start -c mlb.perfectomobile.com -s "$PERFECTO_SECURITY_TOKEN")
+```
+
+Note: Perfecto documents `tunnelId` for Selenium and Appium. It hasn't been verified
+over the Playwright connection in this repo yet.
 
 ## Troubleshooting
 
